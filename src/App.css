@@ -1,5 +1,11 @@
+body {
+  background-color: beige;
+}
+
 .App {
   text-align: center;
+  /* font-style: oblique; */
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .App-logo {
@@ -7,14 +13,20 @@
   pointer-events: none;
 }
 
-form {
-  border: 2px solid #282c34;
+.Review-Form {
+  border: 2px solid burlywood;
+  background-color: antiquewhite;
+  height: 100%;
   width: 70%;
   margin: auto;
-  padding: 50px;
+  padding: 10px 50px 50px 50px;
 }
 
-form label{
+.Review-Form h2 {
+  margin-bottom: 40px;
+}
+
+.Review-Form label{
   width: 40%;
   float: left;
   text-align: left;
@@ -22,6 +34,10 @@ form label{
 
 .Field-Row {
   margin-bottom: 10px;
+}
+
+.Required-Mark {
+  color: red;
 }
 
 @media (prefers-reduced-motion: no-preference) {
