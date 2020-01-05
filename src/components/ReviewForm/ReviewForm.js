@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import CustomField from '../CustomField';
 import { saveFormData } from './ReviewFormApi';
 import { fields } from '../../constants/fields';
+import { validate } from '../../utilities/Validations';
 
 function ReviewForm({forceUpdate}) {
     const [ villaName, setVillaName ] = useState('');
@@ -23,10 +24,16 @@ function ReviewForm({forceUpdate}) {
             noteAboutConstruction,
             noteAboutDecor,
         }
-        saveFormData(formData);
-        alert("Form Submitted Successfully");
-        forceUpdate(); //force parent component to reload
 
+        const response = validate(formatedFields);
+
+        if(response) {
+            alert(response);
+        } else {
+            saveFormData(formData);
+            alert("Form Submitted Successfully");
+            forceUpdate(); //force parent component to reload
+        }
     }
 
     const fieldsToMerge = [
