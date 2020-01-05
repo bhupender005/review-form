@@ -7,6 +7,23 @@
   pointer-events: none;
 }
 
+form {
+  border: 2px solid #282c34;
+  width: 70%;
+  margin: auto;
+  padding: 50px;
+}
+
+form label{
+  width: 40%;
+  float: left;
+  text-align: left;
+}
+
+.Field-Row {
+  margin-bottom: 10px;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
