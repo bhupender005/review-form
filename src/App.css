@@ -18,7 +18,8 @@ body {
   background-color: antiquewhite;
   height: 100%;
   width: 70%;
-  margin: auto;
+  margin: 0 13%;
+  float: left;
   padding: 10px 50px 50px 50px;
 }
 
@@ -27,22 +28,35 @@ body {
 }
 
 .Form-Preview label,.Review-Form label{
-  width: 40%;
+  width: 80%;
   float: left;
   text-align: left;
+  vertical-align: middle;
 }
 
 .Review-Form input, textarea{
-  width: 40%;
+  width: 80%;
 }
 
-.Review-Form textarea {
+.Review-Form .submitButton {
+  margin-top: 20px;
+}
+
+textarea {
   resize: none;
   height: 80px;
 }
 
 .Field-Row {
-  margin-bottom: 10px;
+  padding: 10px 0;
+  float: left;
+  width: 100%;
+  border-bottom: 1px solid burlywood;
+}
+
+.Field-Row > .Left-Row, .Field-Row > .Right-Row {
+  width: 45%;
+  float: left;
 }
 
 .Required-Mark {

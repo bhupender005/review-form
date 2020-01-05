@@ -7,8 +7,12 @@ function CustomField(props) {
     const { labelName, validation, ...rest } = props;
     return (
         <div className="Field-Row">
-            <label>{labelName} {isRequired(validation) && <span className="Required-Mark">(*)</span>}: </label>
-            <Field  validation={validation} {...rest} />
+            <div className="Left-Row">
+                <label>{labelName} {isRequired(validation) && <span className="Required-Mark">(*)</span>}: </label>
+            </div>
+            <div className="Right-Row">
+                <Field  validation={validation} {...rest} />
+            </div>
         </div>
     )
 }

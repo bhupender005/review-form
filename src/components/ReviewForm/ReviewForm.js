@@ -58,7 +58,7 @@ function ReviewForm({forceUpdate}) {
                 {
                     formatedFields.map((fieldProps, i) => <CustomField key={i} {...fieldProps} />)
                 }
-                <button type="submit" name="submit">Submit</button>
+                <button className="submitButton" type="submit" name="submit">Submit</button>
             </form>
         </div>
     );
