@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import CustomField from '../CustomField';
 import { saveFormData } from './ReviewFormApi';
+import { fields } from '../../constants/fields';
 
-function ReviewForm() {
+function ReviewForm({forceUpdate}) {
     const [ villaName, setVillaName ] = useState('');
     const [ dateOfVisit, setDateOfVisit ] = useState('');
     const [ pincode, setPincode ] = useState('');
@@ -24,24 +25,31 @@ function ReviewForm() {
         }
         saveFormData(formData);
         alert("Form Submitted Successfully");
+        forceUpdate(); //force parent component to reload
+
     }
 
-    const fields = [
-        { labelName:"Name of the villa", fieldName:"villaName", fieldValue:villaName, handleChange:setVillaName, validation:"required" },
-        { labelName:"Date of visit", fieldName:"dateOfVisit", fieldValue:dateOfVisit, handleChange:setDateOfVisit, validation:"required" },
-        { labelName:"Pincode", fieldName:"pincode", fieldValue:pincode, handleChange:setPincode, validation:"required" },
-        { labelName:"Owner's name", fieldName:"ownerName", fieldValue:ownerName, handleChange:setOwnerName },
-        { labelName:"A note about the surrounding area of the villa", fieldName:"noteAboutSurrounding", fieldValue:noteAboutSurrounding, handleChange:setNoteAboutSurrounding, validation:"required" },
-        { labelName:"A note about the construction quality of the villa", fieldName:"noteAboutConstruction", fieldValue:noteAboutConstruction, handleChange:setNoteAboutConstruction, validation:"required" },
-        { labelName:"A note about the villa decor", fieldName:"noteAboutDecor", fieldValue:noteAboutDecor, handleChange:setNoteAboutDecor, validation:"required" },
-    ]
+    const fieldsToMerge = [
+        { fieldName:"villaName", fieldValue:villaName, handleChange:setVillaName, validation:"required" },
+        { fieldName:"dateOfVisit", fieldValue:dateOfVisit, handleChange:setDateOfVisit, validation:"required" },
+        { fieldName:"pincode", fieldValue:pincode, handleChange:setPincode, validation:"required" },
+        { fieldName:"ownerName", fieldValue:ownerName, handleChange:setOwnerName },
+        { fieldName:"noteAboutSurrounding", fieldValue:noteAboutSurrounding, handleChange:setNoteAboutSurrounding, validation:"required" },
+        { fieldName:"noteAboutConstruction", fieldValue:noteAboutConstruction, handleChange:setNoteAboutConstruction, validation:"required" },
+        { fieldName:"noteAboutDecor", fieldValue:noteAboutDecor, handleChange:setNoteAboutDecor, validation:"required" },
+    ];
   
+    const formatedFields = fields.map(obj => {
+        const objToMerge = fieldsToMerge.find(o => o.fieldName === obj.fieldName);
+        return {...obj, ...objToMerge};
+    });
+
     return (
         <div className="Review-Form">
             <h2>Review your recent visit in Villa</h2>
             <form onSubmit={e => onSubmit(e)}>
                 {
-                    fields.map((fieldProps, i) => <CustomField key={i} {...fieldProps} />)
+                    formatedFields.map((fieldProps, i) => <CustomField key={i} {...fieldProps} />)
                 }
                 <button type="submit" name="submit">Submit</button>
             </form>

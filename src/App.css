@@ -13,7 +13,7 @@ body {
   pointer-events: none;
 }
 
-.Review-Form {
+.Review-Form, .Form-Preview {
   border: 2px solid burlywood;
   background-color: antiquewhite;
   height: 100%;
@@ -26,10 +26,19 @@ body {
   margin-bottom: 40px;
 }
 
-.Review-Form label{
+.Form-Preview label,.Review-Form label{
   width: 40%;
   float: left;
   text-align: left;
+}
+
+.Review-Form input, textarea{
+  width: 40%;
+}
+
+.Review-Form textarea {
+  resize: none;
+  height: 80px;
 }
 
 .Field-Row {

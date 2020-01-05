@@ -1,27 +1,26 @@
 import React from 'react'
-import { getFormData } from './FormPreviewApi';
+import { getFormData, resetForm } from './FormPreviewApi';
+import { fields } from '../../constants/fields';
+import CustomFields from '../CustomField';
 
-const fields = [
-    { labelName:"Name of the villa", fieldName:"villaName"},
-    { labelName:"Date of visit", fieldName:"dateOfVisit"},
-    { labelName:"Pincode", fieldName:"pincode"},
-    { labelName:"Owner's name", fieldName:"ownerName"},
-    { labelName:"A note about the surrounding area of the villa", fieldName:"noteAboutSurrounding"},
-    { labelName:"A note about the construction quality of the villa", fieldName:"noteAboutConstruction"},
-    { labelName:"A note about the villa decor", fieldName:"noteAboutDecor"},
-];
+const fieldsToMerge = getFormData();
 
-function getFieldLabel(fieldName) {
-    const field = fields.find(row => row.fieldName === fieldName);
-    return (field) ? field.labelName : 'Unknown';
-}
+const formatedFields = fields.map(obj => {
+    const {fieldName:key, fieldType:type } = obj;
+    // const type = obj
+    return {...obj, fieldValue:fieldsToMerge[key], fieldType: `preview-${type}`};
+});
 
-function FormPreview() {
-    const formData = getFormData();
+function FormPreview({forceUpdate}) {
     return (
-        <div>
+        <div className="Form-Preview">
+            <h2>Form Preview</h2>
+            <button onClick={() => {
+                resetForm();
+                forceUpdate(); //force parent component to reload
+            }}>Reset Form</button>
             {
-                Object.keys(formData).map((key, i) => <div key={i}>{`${getFieldLabel(key)}: ${formData[key]}`}</div>)
+                formatedFields.map((fieldProps, i) => <CustomFields key={i} {...fieldProps} />)
             }
         </div>
     )
