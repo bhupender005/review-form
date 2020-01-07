@@ -2,16 +2,19 @@ import React, { useState, useCallback } from 'react';
 import './App.css';
 import ReviewForm from './components/ReviewForm';
 import FormPreview from './components/FormPreview/FormPreview';
-import { getDataFor } from "./utilities/Api";
+import { Provider } from 'react-redux';
+import store from './store/store';
 
 function App() {
-  const checkFormDataSubmited = getDataFor('villaName');
+  const state = store.getState();
   const [, updateState] = useState();
   const forceUpdate = useCallback(() => updateState({}), []);
 
   return (
     <div className="App">
-      {checkFormDataSubmited ?  <FormPreview forceUpdate={forceUpdate} /> : <ReviewForm forceUpdate={forceUpdate} />}
+      <Provider store={store}>
+        {state.villaName ?  <FormPreview forceUpdate={forceUpdate} /> : <ReviewForm forceUpdate={forceUpdate} />}
+      </Provider>
     </div>
   );
 }

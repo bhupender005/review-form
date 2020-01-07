@@ -3,6 +3,8 @@ import CustomField from '../CustomField';
 import { saveFormData } from './ReviewFormApi';
 import { fields } from '../../constants/fields';
 import { validate } from '../../utilities/Validations';
+import { useDispatch } from 'react-redux';
+import { saveForm } from '../../actions/formActions';
 
 function ReviewForm({forceUpdate}) {
     const [ villaName, setVillaName ] = useState('');
@@ -13,8 +15,11 @@ function ReviewForm({forceUpdate}) {
     const [ noteAboutConstruction, setNoteAboutConstruction ] = useState('');
     const [ noteAboutDecor, setNoteAboutDecor ] = useState('');
 
+    // const tempState = useSelector(state => state.name);
+
     const onSubmit = (e) => {
         e.preventDefault();
+        
         const formData = {
             villaName,
             dateOfVisit,
@@ -24,7 +29,8 @@ function ReviewForm({forceUpdate}) {
             noteAboutConstruction,
             noteAboutDecor,
         }
-
+        dispatch(saveForm(formData));
+        
         const response = validate(formatedFields);
 
         if(response) {
@@ -50,6 +56,8 @@ function ReviewForm({forceUpdate}) {
         const objToMerge = fieldsToMerge.find(o => o.fieldName === obj.fieldName);
         return {...obj, ...objToMerge};
     });
+
+    const dispatch = useDispatch();
 
     return (
         <div className="Review-Form">

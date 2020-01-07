@@ -4,9 +4,9 @@ const getFormData = () => {
     return getData();
 }
 
-const resetForm = () => deleteData();
+const resetFormData = () => deleteData();
 
 export {
     getFormData,
-    resetForm,
+    resetFormData,
 }
