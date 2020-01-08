@@ -1,6 +1,7 @@
 import { SAVE_FORM, SAVE_COMMENT, RESET_FORM } from "../constants/types"
 import { saveFormData } from "../components/ReviewForm/ReviewFormApi"
 import { resetFormData } from "../components/FormPreview/FormPreviewApi"
+import { saveCommentToStorage } from "../components/CustomField/StructuredNoteApi"
 
 export const saveForm = (data) => {
     return {
@@ -33,5 +34,12 @@ export const resetFormAction = () => {
     return (dispatch) => {
         resetFormData();
         dispatch(resetForm());
+    }
+}
+
+export const saveCommentAction = (key, comment) => {
+    return (dispatch) => {
+        saveCommentToStorage(key, comment);
+        dispatch(saveComment({[key]: comment}));
     }
 }

@@ -1,14 +1,14 @@
 import { saveDataForSingle, getDataFor } from '../../utilities/Api';
 
-const saveComment = (key, comment) => {
+const saveCommentToStorage = (key, comment) => {
     saveDataForSingle(key, comment);
 }
 
-const getComment = (commentId) => {
+const getCommentFromStorage = (commentId) => {
     return getDataFor(commentId);
 }
 
 export {
-    saveComment,
-    getComment,
+    saveCommentToStorage,
+    getCommentFromStorage,
 }
