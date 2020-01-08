@@ -1,29 +1,22 @@
 import React from 'react'
-import { resetFormData } from './FormPreviewApi';
 import { fields } from '../../constants/fields';
 import CustomFields from '../CustomField';
-import { resetForm } from '../../actions/formActions';
-import { useSelector, useDispatch } from 'react-redux';
+import { resetFormAction } from '../../actions/formActions';
+import { useSelector, connect } from 'react-redux';
 
-// const fieldsToMerge = getFormData();
-
-function FormPreview({forceUpdate}) {
+function FormPreview({forceUpdate, ...props}) {
     const fieldsToMerge = useSelector(state => state);
 
     const formatedFields = fields.map(obj => {
         const {fieldName:key, fieldType:type } = obj;
-        // const type = obj
         return {...obj, fieldValue:fieldsToMerge[key], fieldType: `preview-${type}`};
     });
-
-    const dispatch = useDispatch();
 
     return (
         <div className="Form-Preview">
             <h2>Form Preview</h2>
             <button onClick={() => {
-                resetFormData();
-                dispatch(resetForm())
+                props.resetFormAction();
                 forceUpdate(); //force parent component to reload
             }}>Reset Form</button>
             {
@@ -33,4 +26,10 @@ function FormPreview({forceUpdate}) {
     )
 }
 
-export default FormPreview
+const mapDispatchToProps = (dispatch) => {
+    return {
+        resetFormAction: () => dispatch(resetFormAction())
+    }
+}
+
+export default connect(null, mapDispatchToProps)(FormPreview)

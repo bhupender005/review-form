@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
 import CustomField from '../CustomField';
-import { saveFormData } from './ReviewFormApi';
 import { fields } from '../../constants/fields';
 import { validate } from '../../utilities/Validations';
-import { useDispatch } from 'react-redux';
-import { saveForm } from '../../actions/formActions';
+import { saveFormAction } from '../../actions/formActions';
+import { connect } from 'react-redux';
 
-function ReviewForm({forceUpdate}) {
+function ReviewForm({forceUpdate, ...props}) {
     const [ villaName, setVillaName ] = useState('');
     const [ dateOfVisit, setDateOfVisit ] = useState('');
     const [ pincode, setPincode ] = useState('');
@@ -14,8 +13,6 @@ function ReviewForm({forceUpdate}) {
     const [ noteAboutSurrounding, setNoteAboutSurrounding ] = useState('');
     const [ noteAboutConstruction, setNoteAboutConstruction ] = useState('');
     const [ noteAboutDecor, setNoteAboutDecor ] = useState('');
-
-    // const tempState = useSelector(state => state.name);
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -29,14 +26,13 @@ function ReviewForm({forceUpdate}) {
             noteAboutConstruction,
             noteAboutDecor,
         }
-        dispatch(saveForm(formData));
         
         const response = validate(formatedFields);
 
         if(response) {
             alert(response);
         } else {
-            saveFormData(formData);
+            props.saveFormAction(formData);
             alert("Form Submitted Successfully");
             forceUpdate(); //force parent component to reload
         }
@@ -57,8 +53,6 @@ function ReviewForm({forceUpdate}) {
         return {...obj, ...objToMerge};
     });
 
-    const dispatch = useDispatch();
-
     return (
         <div className="Review-Form">
             <h2>Review your recent visit in Villa</h2>
@@ -72,4 +66,10 @@ function ReviewForm({forceUpdate}) {
     );
 }
 
-export default ReviewForm
+const mapDispatchToProps = (dispatch) => {
+    return {
+        saveFormAction: (data) => dispatch(saveFormAction(data))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(ReviewForm)
